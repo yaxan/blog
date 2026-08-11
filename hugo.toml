@@ -1,0 +1,29 @@
+baseURL = "https://example.org/"   # set to your real domain before deploying
+locale = "en-US"
+title = "Yazan Masoud"
+
+# Keep the site barebones: no taxonomies, no extra page kinds.
+disableKinds = ["taxonomy", "term"]
+
+enableRobotsTXT = true
+
+[params]
+  description = "Lessons from my ML/AI learnings — written so anyone can follow along."
+
+[markup]
+  # Server-side math: goldmark passes LaTeX through, a render hook turns it
+  # into KaTeX HTML at build time. Zero client-side JS.
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block = [['\[', '\]'], ['$$', '$$']]
+      inline = [['\(', '\)'], ['$', '$']]
+
+  [markup.highlight]
+    # Class-based highlighting; the palette lives in assets/css/syntax.css
+    # so code blocks can follow light/dark mode.
+    noClasses = false
+
+[outputs]
+  home = ["html", "rss"]
+  section = ["html"]

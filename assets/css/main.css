@@ -1,0 +1,135 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --accent: #0b57d0;
+  --rule: #e5e5e5;
+  --code-bg: #f6f6f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --fg: #e6e6e6;
+    --muted: #9a9a9a;
+    --accent: #7cacf8;
+    --rule: #2a2d33;
+    --code-bg: #1d2025;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+  max-width: 42rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.site-title {
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.intro { color: var(--muted); }
+
+.post-list {
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.post-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.35rem 0;
+}
+
+.post-list time {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 0.25rem; }
+h2 { font-size: 1.3rem; margin-top: 2.25rem; }
+h3 { font-size: 1.1rem; }
+
+.meta { color: var(--muted); font-size: 0.9rem; margin-top: 0; }
+
+article img, article video { max-width: 100%; height: auto; }
+
+figure.anim { margin: 2rem 0; }
+
+figure.anim video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: #14161a;
+}
+
+figure.anim figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+code, pre {
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
+
+pre {
+  background: var(--code-bg);
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+pre code { background: none; padding: 0; }
+
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0; }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--rule);
+  color: var(--muted);
+}
+
+hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+.site-footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-footer a { color: var(--muted); }

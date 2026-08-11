@@ -1,0 +1,14 @@
+{{/* Force content render first so the passthrough hook can set hasMath. */}}
+{{ $noop := .Content }}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
+<meta name="description" content="{{ .Description | default site.Params.description }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | relURL }}">
+{{- /* All site CSS is tiny, so inline it: one request, no render delay. */}}
+{{- $css := slice (resources.Get "css/main.css") (resources.Get "css/syntax.css") | resources.Concat "css/bundle.css" | minify }}
+<style>{{ $css.Content | safeCSS }}</style>
+{{- /* KaTeX CSS + fonts only on pages that actually contain math. */}}
+{{- if .Store.Get "hasMath" }}
+<link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}">
+{{- end }}

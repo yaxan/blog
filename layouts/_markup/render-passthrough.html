@@ -1,0 +1,5 @@
+{{- /* Render LaTeX to HTML at build time with Hugo's embedded KaTeX.
+     output "html" gives classic KaTeX rendering (needs the vendored CSS);
+     the default MathML output looks inconsistent across browsers. */ -}}
+{{- .Page.Store.Set "hasMath" true -}}
+{{- transform.ToMath .Inner (dict "output" "html" "displayMode" (eq .Type "block")) -}}

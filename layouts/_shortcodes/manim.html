@@ -1,0 +1,8 @@
+{{- /* Embed a Manim-rendered animation by scene name.
+     Looks for static/anim/<SceneName>.mp4 (see `make anims`). */ -}}
+{{- $name := .Get 0 -}}
+{{- $src := printf "anim/%s.mp4" $name | relURL -}}
+<figure class="anim">
+  <video src="{{ $src }}" autoplay loop muted playsinline preload="metadata"></video>
+  {{- with .Inner }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
