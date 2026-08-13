@@ -1,0 +1,13 @@
+{{- /* The shelf of ideas: glyph chip, title, one-line description, date. */ -}}
+<ul class="post-list">
+  {{ range . }}
+  <li>
+    <a class="glyph" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ partial "glyph.html" (dict "name" .Params.glyph) }}</a>
+    <span class="t">
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{ with .Description }}<span class="d">{{ . }}</span>{{ end }}
+    </span>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01" }}</time>
+  </li>
+  {{ end }}
+</ul>

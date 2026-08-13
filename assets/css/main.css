@@ -1,20 +1,49 @@
+/* Chalk & Paper.
+   Light mode is the printed lecture handout; dark mode is the chalkboard
+   the Manim animations are drawn on — the page background matches the
+   render background (#14161a) exactly, so videos have no edges there. */
+
+/* Headings share a voice with the equations: KaTeX's Computer Modern,
+   served from the font files the math already uses. */
+@font-face {
+  font-family: "KaTeX Main";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/katex/fonts/KaTeX_Main-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "KaTeX Main";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/katex/fonts/KaTeX_Main-Bold.woff2") format("woff2");
+}
+
 :root {
-  --bg: #ffffff;
-  --fg: #1a1a1a;
-  --muted: #6b6b6b;
-  --accent: #0b57d0;
-  --rule: #e5e5e5;
-  --code-bg: #f6f6f6;
+  --bg: #fbfbf8;
+  --fg: #24262a;
+  --muted: #75787d;
+  --meta: #8a8d92;
+  --accent: #1c6e9e;
+  --underline: #b9d6e5;
+  --rule: #e2e1db;
+  --code-bg: #f4f3ee;
+  --panel: #f6f5ef;
+  --board: #14161a;      /* Manim render background — do not drift */
+  --chalk-blue: #58c4dd;
+  --chalk-yellow: #f5e13d;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #14161a;
-    --fg: #e6e6e6;
-    --muted: #9a9a9a;
-    --accent: #7cacf8;
-    --rule: #2a2d33;
-    --code-bg: #1d2025;
+    --fg: #d6dae0;
+    --muted: #9aa0a8;
+    --meta: #79808a;
+    --accent: #58c4dd;
+    --underline: #2c505b;
+    --rule: #262a31;
+    --code-bg: #1b1e24;
+    --panel: #181b20;
   }
 }
 
@@ -28,54 +57,114 @@ body {
   max-width: 42rem;
   background: var(--bg);
   color: var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: Charter, Georgia, serif;
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.68;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+::selection { background: #d8ecf5; }
+@media (prefers-color-scheme: dark) {
+  ::selection { background: #4a4419; color: #f2e9b8; }
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .site-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.8rem;
   margin-bottom: 2.5rem;
 }
 
 .site-title {
+  font-family: "KaTeX Main", Georgia, serif;
+  font-size: 1.05rem;
   color: var(--fg);
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  font-family: "KaTeX Main", Georgia, serif;
   font-weight: 700;
-  font-size: 1.125rem;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+h1 { font-size: 1.85rem; line-height: 1.22; margin: 0 0 0.4rem; }
+h2 { font-size: 1.35rem; margin-top: 2.4rem; }
+h3 { font-size: 1.1rem; }
+
+.meta {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--meta);
+  margin: 0 0 1.8rem;
 }
 
-.intro { color: var(--muted); }
+.intro { color: var(--muted); margin-bottom: 2rem; }
 
-.post-list {
-  list-style: none;
-  margin: 2rem 0;
-  padding: 0;
-}
+/* ---------- home: the shelf of ideas ---------- */
+
+.post-list { list-style: none; margin: 2rem 0; padding: 0; }
 
 .post-list li {
   display: flex;
-  gap: 1rem;
-  align-items: baseline;
-  padding: 0.35rem 0;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.post-list li:last-child { border-bottom: none; }
+
+.glyph {
+  flex: none;
+  width: 72px;
+  height: 45px;
+  background: var(--board);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+.glyph svg { display: block; width: 56px; height: 34px; }
+
+.post-list .t { flex: 1; min-width: 0; }
+.post-list .t > a {
+  color: var(--fg);
+  font-weight: 700;
+  text-decoration: none;
+}
+.post-list .t > a:hover { color: var(--accent); }
+.post-list .d {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-top: 0.1rem;
 }
 
 .post-list time {
-  color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.72rem;
+  color: var(--meta);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  font-size: 0.9rem;
 }
+@media (max-width: 560px) { .post-list time { display: none; } }
 
-h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 0.25rem; }
-h2 { font-size: 1.3rem; margin-top: 2.25rem; }
-h3 { font-size: 1.1rem; }
+/* ---------- article ---------- */
 
-.meta { color: var(--muted); font-size: 0.9rem; margin-top: 0; }
+article { counter-reset: eqn sidenote; }
 
 article img, article video { max-width: 100%; height: auto; }
 
@@ -85,20 +174,157 @@ figure.anim video {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 8px;
-  background: #14161a;
+  border-radius: 6px;
+  background: var(--board);
+}
+/* the whole point of the chalkboard: no seam between page and animation */
+@media (prefers-color-scheme: dark) {
+  figure.anim video { border-radius: 0; }
 }
 
 figure.anim figcaption {
-  margin-top: 0.5rem;
-  color: var(--muted);
-  font-size: 0.9rem;
+  margin-top: 0.6rem;
+  color: var(--meta);
+  font-size: 0.85rem;
   text-align: center;
 }
 
+/* numbered display equations, textbook-style */
+.katex-display {
+  position: relative;
+  counter-increment: eqn;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+.katex-display::after {
+  content: "(" counter(eqn) ")";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "KaTeX Main", Georgia, serif;
+  font-size: 0.9rem;
+  color: var(--meta);
+}
+
+/* ---------- tangents: the side board ---------- */
+/* A tangent touches the lecture at one point, wanders off, and returns.
+   Skipping one must cost nothing — hence no equation numbers inside. */
+
+.tangent {
+  margin: 1.9rem 0;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--panel);
+}
+.tangent:hover { border-color: color-mix(in srgb, var(--accent) 30%, var(--rule)); }
+
+.tangent summary {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 0.95rem;
+  cursor: pointer;
+  list-style: none;
+}
+.tangent summary::-webkit-details-marker { display: none; }
+
+.tangent-chip {
+  flex: none;
+  width: 46px;
+  height: 29px;
+  background: var(--board);
+  border-radius: 3px;
+  display: grid;
+  place-items: center;
+}
+.tangent-chip svg { display: block; width: 38px; height: 23px; }
+
+.tangent-text { flex: 1; min-width: 0; }
+.tangent-label {
+  display: block;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.tangent-title { font-style: italic; font-size: 0.98rem; }
+
+.tangent-mark {
+  flex: none;
+  font-family: "KaTeX Main", Georgia, serif;
+  font-size: 1.15rem;
+  color: var(--meta);
+  transition: transform 0.18s ease;
+}
+.tangent[open] .tangent-mark { transform: rotate(45deg); }
+@media (prefers-reduced-motion: reduce) {
+  .tangent-mark { transition: none; }
+}
+
+.tangent-body {
+  padding: 0.9rem 1.1rem 0.4rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.98rem;
+}
+.tangent-body > :first-child { margin-top: 0; }
+
+/* a skipped tangent must not consume equation numbers */
+.tangent .katex-display { counter-increment: none; }
+.tangent .katex-display::after { content: none; }
+
+/* ---------- sidenotes: the margin column ---------- */
+
+.sn-ref {
+  counter-increment: sidenote;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.7em;
+  vertical-align: super;
+  color: var(--accent);
+}
+.sn-ref::after { content: counter(sidenote); }
+
+.sidenote {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+  border-left: 2px solid var(--rule);
+  padding-left: 0.8rem;
+  margin: 0.8rem 0;
+}
+.sidenote::before {
+  content: counter(sidenote);
+  color: var(--accent);
+  font-size: 0.8em;
+  vertical-align: super;
+  margin-right: 0.35em;
+}
+
+/* wide screens: notes float into a true margin column (Tufte-style).
+   58rem − 1.25rem left − 17.25rem right = the same 39.5rem text column. */
+@media (min-width: 62rem) {
+  body { max-width: 58rem; padding-right: 17.25rem; }
+  .sidenote {
+    float: right;
+    clear: right;
+    width: 14rem;
+    margin: 0 -16rem 0.8rem 0;
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.35rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- code, quotes, rules ---------- */
+
 code, pre {
   font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.9em;
+  font-size: 0.85em;
 }
 
 code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
@@ -106,19 +332,17 @@ code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
 pre {
   background: var(--code-bg);
   padding: 0.9rem 1rem;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow-x: auto;
   line-height: 1.5;
 }
 
 pre code { background: none; padding: 0; }
 
-.katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0; }
-
 blockquote {
   margin: 1.5rem 0;
   padding-left: 1rem;
-  border-left: 3px solid var(--rule);
+  border-left: 3px solid var(--underline);
   color: var(--muted);
 }
 
@@ -128,8 +352,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
   margin-top: 4rem;
   padding-top: 1rem;
   border-top: 1px solid var(--rule);
-  color: var(--muted);
-  font-size: 0.9rem;
+  color: var(--meta);
+  font-size: 0.85rem;
 }
-
-.site-footer a { color: var(--muted); }
+.site-footer a { color: var(--meta); }

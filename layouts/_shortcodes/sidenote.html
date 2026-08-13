@@ -1,0 +1,8 @@
+{{- /* A numbered margin note. Inline in a paragraph, right after the text
+     it annotates. Floats into the margin column on wide screens; renders
+     as a small inset block on narrow ones. Numbering is pure CSS counters.
+
+     Usage, inline mid-paragraph:
+       ...the learning rate<sidenote>Too large and you overshoot.</sidenote>
+     written with the usual shortcode braces. */ -}}
+<span class="sn-ref" aria-hidden="true"></span><span class="sidenote">{{ .Page.RenderString (trim .Inner "\n") }}</span>

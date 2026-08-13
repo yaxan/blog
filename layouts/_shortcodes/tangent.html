@@ -1,0 +1,30 @@
+{{- /* A tangent: touches the lecture at one point, wanders off, returns.
+     For sub-concepts some readers already know (what's an RNN, what's a
+     gradient). Zero JS — a styled <details>. Body is full markdown and
+     may contain math; its display equations are deliberately unnumbered
+     so readers who skip the tangent see no gaps.
+
+     Usage (with the usual shortcode braces):
+       <tangent "What exactly is a gradient?"> ...markdown... </tangent>
+     or named params: <tangent title="..." glyph="rnn"> */ -}}
+{{- $title := "" -}}
+{{- $glyph := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $title = .Get "title" -}}
+  {{- $glyph = .Get "glyph" -}}
+{{- else -}}
+  {{- $title = .Get 0 -}}
+{{- end -}}
+<details class="tangent">
+  <summary>
+    <span class="tangent-chip" aria-hidden="true">{{ partial "glyph.html" (dict "name" $glyph) }}</span>
+    <span class="tangent-text">
+      <span class="tangent-label">Tangent</span>
+      <span class="tangent-title">{{ $title }}</span>
+    </span>
+    <span class="tangent-mark" aria-hidden="true">+</span>
+  </summary>
+  <div class="tangent-body">
+    {{ .Page.RenderString (dict "display" "block") (trim .Inner "\n") }}
+  </div>
+</details>

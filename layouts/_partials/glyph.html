@@ -1,0 +1,16 @@
+{{- /* A post's idea as a tiny chalkboard drawing, in the Manim palette.
+     Add a case per post (front matter: glyph: <name>). The default is the
+     tangent-line glyph, also used by the tangent shortcode. */ -}}
+{{- $name := .name | default "tangent" -}}
+<svg viewBox="0 0 56 34" aria-hidden="true" focusable="false">
+{{- if eq $name "gradient-descent" }}
+  <path d="M 4 4 Q 28 52 52 4" fill="none" stroke="#58c4dd" stroke-width="2.5"/>
+  <circle cx="18.4" cy="24.2" r="1.8" fill="#f5e13d" opacity="0.4"/>
+  <circle cx="23.2" cy="27" r="1.8" fill="#f5e13d" opacity="0.7"/>
+  <circle cx="28" cy="28" r="3" fill="#f5e13d"/>
+{{- else }}
+  <path d="M 4 8 Q 28 44 52 8" fill="none" stroke="#58c4dd" stroke-width="2.5"/>
+  <line x1="4" y1="14.5" x2="34" y2="32.5" stroke="#f5e13d" stroke-width="1.5"/>
+  <circle cx="18.4" cy="23.1" r="2.5" fill="#f5e13d"/>
+{{- end }}
+</svg>

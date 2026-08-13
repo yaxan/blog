@@ -5,6 +5,9 @@
 <title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
 <meta name="description" content="{{ .Description | default site.Params.description }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | relURL }}">
+{{- /* Headings render in KaTeX_Main on every page; preload so titles don't flash. */}}
+<link rel="preload" href="{{ "katex/fonts/KaTeX_Main-Bold.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "katex/fonts/KaTeX_Main-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 {{- /* All site CSS is tiny, so inline it: one request, no render delay. */}}
 {{- $css := slice (resources.Get "css/main.css") (resources.Get "css/syntax.css") | resources.Concat "css/bundle.css" | minify }}
 <style>{{ $css.Content | safeCSS }}</style>
