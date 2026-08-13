@@ -67,10 +67,67 @@ In-post vocabulary:
 - `{{</* manim "SceneName" */>}}Caption.{{</* /manim */>}}` — embeds
   `static/anim/SceneName.mp4` as a looping muted video.
 
-Voice: explain like 3b1b — build intuition first, formalism second. Use a
-tangent (not a paragraph of hedging) when a prerequisite might be missing;
-use a sidenote for one-breath asides that would otherwise be parentheses.
-Prose first, structure on a second pass.
+## Writing style
+
+Explain like 3b1b: build intuition first, formalism second. Reach for a
+tangent when a prerequisite might be missing, a sidenote for a one-breath
+aside that would otherwise be parentheses. Prose first; structure on a
+second pass.
+
+### Polishing the author's prose
+
+The author drafts every post; agents polish. The target is the author's
+voice with the friction removed — not a rewrite, and not "AI text".
+Calibrate on a published post (`content/posts/gradient-descent.md`,
+`seq2seq.md`) before editing. The voice you're preserving: direct address
+("you", "we"), rhetorical pivots mid-argument ("But wait — why are we even
+encoding things into vectors?"), concrete examples doing the explaining
+("I am hungry" → "Я голоден"), contractions, em dashes marking a spoken
+beat, the occasional fragment.
+
+Ground rules:
+
+- Make the smallest edit that fixes the problem. Grammar, agreement,
+  punctuation, a genuinely clunky phrase, a sentence that reads better
+  split — yes. Restructuring a paragraph that already works — no. If more
+  than about a quarter of the words changed, that was a rewrite.
+- Keep what makes it human: rhetorical questions, opinions, mild
+  informality ("spit out a translation"). Don't formalize them away.
+  Educated but not stiff is the register.
+- Never pad. No added intros, transitions between sections, or a closing
+  paragraph that restates the post. If the fix removes words, good.
+- Repeating a technical term is correct. Say "hidden state" five times if
+  the paragraph is about hidden states. Synonym-rotating to avoid
+  repetition ("the memory vector", "this internal representation") is an
+  AI tell and makes technical prose worse.
+- Plain copulas are fine. "The context is a vector" — never "serves as",
+  "functions as", "stands as", or "represents" when "is" is meant.
+- Don't even out sentence rhythm. A three-word sentence after a long one
+  is doing its job. Leave it.
+
+### AI tells — never introduce, remove on sight
+
+Sourced from Wikipedia's "Signs of AI writing" catalog, filtered for this
+blog:
+
+- Vocabulary: delve, crucial, pivotal, testament, tapestry, landscape,
+  underscore, highlight (as a verb of importance), showcase, foster,
+  intricate, vibrant, boast, leverage, seamless, journey, realm, robust
+  (as praise — "robustness" as the ML term of art is fine).
+- Constructions: "not just X, but Y"; "It's not about X — it's about Y";
+  tripled anything ("fast, simple, and powerful"); "from X to Y"
+  comprehensiveness sweeps; trailing "-ing" analysis clauses ("…,
+  highlighting the importance of attention"); "In conclusion" / "Overall";
+  "Let's dive in".
+- Filler and hedge: "It's worth noting that", "Importantly,",
+  "Interestingly,", "arguably". If it's worth noting, note it.
+- Structure: don't convert prose into bullet lists or bold-term-colon
+  lists; don't add headings to short sections; no emoji.
+- Em dashes are part of this voice, but match the draft's existing
+  density — don't add more than the paragraph already had.
+
+Litmus test: read the edited paragraph aloud. If it could open any ML blog
+post on the internet, it lost the voice — put the author's phrasing back.
 
 ## Animations
 
