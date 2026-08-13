@@ -74,28 +74,44 @@ tangent when a prerequisite might be missing, a sidenote for a one-breath
 aside that would otherwise be parentheses. Prose first; structure on a
 second pass.
 
-### Polishing the author's prose
+### From messy draft to finished post
 
-The author drafts every post; agents polish. The target is the author's
-voice with the friction removed — not a rewrite, and not "AI text".
-Calibrate on a published post (`content/posts/gradient-descent.md`,
-`seq2seq.md`) before editing. The voice you're preserving: direct address
-("you", "we"), rhetorical pivots mid-argument ("But wait — why are we even
-encoding things into vectors?"), concrete examples doing the explaining
-("I am hungry" → "Я голоден"), contractions, em dashes marking a spoken
-beat, the occasional fragment.
+The author writes drafts as messy blobs — unstructured, out of order,
+half-formed asides inline. Turning a blob into a well-structured post is
+the agent's job, and structural work is encouraged: add section headings,
+reorder so ideas build, split walls of text, pull prerequisite
+explanations into tangents, turn parenthetical asides into sidenotes,
+suggest where an animation or equation belongs.
+
+The prose is a different matter. The author's sentences are the raw
+material: carry them through the restructure, fix what's broken, and only
+write new connective prose where the structure demands it (a bridge
+sentence, a heading, a tangent body the draft only gestured at). New prose
+must pass for the author's — same register, and everything in the tells
+list below applies to it doubly.
+
+Voice calibration: `content/posts/seq2seq.md` is the author's real
+drafting voice — that's the reference. **`gradient-descent.md` was
+AI-written** (as scaffolding for the theme) and is a reference for
+formatting and component usage only, not for voice. The voice to preserve:
+direct address ("you", "we"), rhetorical pivots mid-argument ("But wait —
+why are we even encoding things into vectors?"), concrete examples doing
+the explaining ("I am hungry" → "Я голоден"), contractions, em dashes
+marking a spoken beat, the occasional fragment.
 
 Ground rules:
 
-- Make the smallest edit that fixes the problem. Grammar, agreement,
-  punctuation, a genuinely clunky phrase, a sentence that reads better
-  split — yes. Restructuring a paragraph that already works — no. If more
-  than about a quarter of the words changed, that was a rewrite.
+- Structure freely; rewrite reluctantly. Within a sentence, make the
+  smallest edit that fixes the problem — grammar, agreement, a genuinely
+  clunky phrase, a sentence that reads better split. A polished paragraph
+  should still be traceable, sentence by sentence, to the author's draft.
 - Keep what makes it human: rhetorical questions, opinions, mild
   informality ("spit out a translation"). Don't formalize them away.
   Educated but not stiff is the register.
-- Never pad. No added intros, transitions between sections, or a closing
-  paragraph that restates the post. If the fix removes words, good.
+- Never pad. Headings and bridge sentences that the structure needs are
+  fine; intros that preview, transitions that recap, and a closing
+  paragraph that restates the post are not. If the edit removes words,
+  good.
 - Repeating a technical term is correct. Say "hidden state" five times if
   the paragraph is about hidden states. Synonym-rotating to avoid
   repetition ("the memory vector", "this internal representation") is an
