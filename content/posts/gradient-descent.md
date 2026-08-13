@@ -2,6 +2,7 @@
 title: "How gradient descent finds the minimum"
 date: 2026-08-10
 description: "A visual walk through the single idea powering nearly all of deep learning."
+glyph: gradient-descent
 ---
 
 Nearly every neural network you've heard of was trained by the same humble
@@ -15,8 +16,26 @@ $$
 w_{t+1} = w_t - \eta \, \nabla L(w_t)
 $$
 
-where $\eta$ is the *learning rate* — the size of each step. Here's what that
-looks like on a simple one-dimensional loss:
+where $\eta$ is the *learning rate* — the size of each
+step.{{< sidenote >}}Too large and you leap clean across the valley; too
+small and you crawl. Picking $\eta$ well is half the craft of training.{{< /sidenote >}}
+
+{{< tangent "Wait — what exactly is a gradient?" >}}
+With a single parameter, the gradient is just the slope: $\nabla L$ is the
+derivative $dL/dw$, positive when the curve rises to the right. With many
+parameters $w = (w_1, \ldots, w_n)$, the gradient collects every partial
+slope into a vector,
+
+$$
+\nabla L = \left( \frac{\partial L}{\partial w_1}, \ldots, \frac{\partial L}{\partial w_n} \right)
+$$
+
+which points in the direction of *steepest increase* of the loss. That's the
+entire reason for the minus sign in the update: stepping against the
+gradient is the fastest local way downhill.
+{{< /tangent >}}
+
+Here's what that looks like on a simple one-dimensional loss:
 
 {{< manim "GradientDescent" >}}
 Each step moves against the slope. Steps shrink near the bottom because the
