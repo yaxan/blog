@@ -28,7 +28,35 @@ make build             # production build into public/
   to recreate). Rendered MP4s are committed, so CI never needs Python.
   Scenes use `Text()` (Pango) rather than `Tex()`, so no LaTeX install is
   needed; install a TeX distribution (e.g. `brew install --cask basictex`)
-  if you want `MathTex` in animations.
+  if you want `MathTex` in animations. Render scenes on the site's dark
+  background (`self.camera.background_color = "#14161a"`) — in dark mode the
+  page background matches it exactly, so videos appear borderless.
+
+- Tangents: collapsible primers for sub-concepts some readers already know
+  (what's an RNN, what's a gradient). Zero JS — a styled `<details>`. The
+  body is full markdown and may contain math; its display equations are
+  deliberately unnumbered so skipping a tangent leaves no gaps.
+
+  ```
+  {{</* tangent "What's an RNN, and why use one here?" */>}}
+  ...markdown with $math$...
+  {{</* /tangent */>}}
+  ```
+
+- Sidenotes: short numbered asides, written inline right after the text they
+  annotate. They float into the margin on wide screens and render as small
+  inset blocks on narrow ones.
+
+  ```
+  ...the learning rate{{</* sidenote */>}}Too large and you overshoot.{{</* /sidenote */>}} controls...
+  ```
+
+- Glyphs: each post can carry a tiny chalkboard drawing of its core idea,
+  shown on the home page (and usable as a tangent icon via `glyph="name"`).
+  Set `glyph: my-post` in front matter and add a matching `if` case with a
+  small SVG (Manim palette: blue `#58c4dd`, yellow `#f5e13d`, green
+  `#83c167`, red `#fc6255`) in `layouts/_partials/glyph.html`. Posts without
+  one fall back to the default tangent-line glyph.
 
 ## Deploying
 
