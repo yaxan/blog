@@ -166,11 +166,12 @@ not exact, queen is just the nearest word once you skip the three you
 started with.
 
 {{< manim "KingQueen" >}}
-Each word's numbers are its coordinates, so every word is a point. The
-man → woman step and the king → queen step are nearly the same, so taking
-the man → woman step from king lands you on queen: king − man + woman ≈
-queen. Our toy numbers work out exactly; real embeddings only get you
-near queen.
+Each word's numbers are its coordinates, so every word is a point, and
+also an arrow from the origin. Subtracting man means following its arrow
+flipped, and adding woman means following its arrow as is. Take both
+hops from king and you land on queen: together they're just the man →
+woman step. Our toy numbers work out exactly; real embeddings only get
+you near queen.
 {{< /manim >}}
 
 Nobody hand-picks what the axes mean; no single axis means anything

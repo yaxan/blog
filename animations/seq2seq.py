@@ -570,8 +570,9 @@ class RNNLoop(BeatScene):
 
 
 class KingQueen(BeatScene):
-    """Embeddings as coordinates: words are points, directions carry
-    meaning, and king - man + woman lands on queen."""
+    """Embeddings as coordinates: words are points, and also arrows from
+    the origin. king - man + woman is walked tip to tail, one equation
+    term per move, and the walk lands on queen."""
 
     def construct(self):
         self.camera.background_color = BG
@@ -620,19 +621,7 @@ class KingQueen(BeatScene):
                       FadeIn(chips[w]), run_time=0.5)
         self.wait(0.5)
 
-        # The same step twice: man -> woman, king -> queen.
-        g1 = Arrow(dots["man"].get_center(), dots["woman"].get_center(),
-                   buff=0.12, color=BLUE, stroke_width=4,
-                   max_tip_length_to_length_ratio=0.08)
-        g2 = Arrow(dots["king"].get_center(), dots["queen"].get_center(),
-                   buff=0.12, color=BLUE, stroke_width=4,
-                   max_tip_length_to_length_ratio=0.08)
-        self.play(GrowArrow(g1), run_time=0.7)
-        self.play(GrowArrow(g2), run_time=0.7)
-        self.wait(0.8)
-        self.play(g1.animate.set_opacity(0.25), g2.animate.set_opacity(0.25))
-
-        # The equation builds at the top, words and numbers in step.
+        # The equation builds at the top, one term per move below.
         eq_words = VGroup(
             Text("king", font_size=30, color=BLUE, font="Helvetica"),
             Text("− man", font_size=30, font="Helvetica"),
@@ -646,26 +635,67 @@ class KingQueen(BeatScene):
             Text("≈ (5, 4)", font_size=22, color=GREY_B, font="Helvetica"),
         ).arrange(RIGHT, buff=0.3).move_to([0, 2.9, 0])
 
+        org = ax.c2p(0, 0)
+
+        def vec(word):
+            return Arrow(org, dots[word].get_center(), buff=0, color=BLUE,
+                         stroke_width=4, max_tip_length_to_length_ratio=0.08)
+
+        # king: a point, but also an arrow from the origin. The walker
+        # starts on its tip.
+        v_king = vec("king")
         walker = Dot(dots["king"].get_center(), radius=0.11, color=WHITE)
         self.play(FadeIn(eq_words[0]), FadeIn(eq_nums[0]),
-                  FadeIn(walker, scale=0.5))
+                  GrowArrow(v_king), FadeIn(walker, scale=0.5), run_time=0.9)
+        self.wait(0.4)
+
+        # - man: a copy of man's arrow flips (the original stays put,
+        # dimmed), hangs off king tip to tail, and the walker rides it
+        # down to king - man = (0, 3).
+        v_man = vec("man")
+        self.play(FadeIn(eq_words[1]), FadeIn(eq_nums[1]), GrowArrow(v_man),
+                  run_time=0.9)
+        hop1 = v_man.copy()
+        self.play(Rotate(hop1, PI, about_point=hop1.get_center()),
+                  v_man.animate.set_opacity(0.35), run_time=0.5)
+        self.play(hop1.animate.shift(dots["king"].get_center()
+                                     - dots["man"].get_center()),
+                  v_king.animate.set_opacity(0.35), run_time=0.9)
+        mid = ax.c2p(0, 3)
+        self.play(walker.animate.move_to(mid), run_time=0.9)
+        im_dot = Dot(mid, radius=0.07, color=GREY_A)
+        im_chip = Text("(0, 3)", font_size=20, color=GREY_B,
+                       font="Helvetica").next_to(im_dot, UL, buff=0.15)
+        self.play(FadeIn(im_dot), FadeIn(im_chip), run_time=0.4)
         self.wait(0.3)
 
-        # Pick up the man -> woman step and start it at king instead:
-        # the transported arrow lands right on the dimmed king -> queen
-        # arrow, and the walker rides it to queen.
-        step = g1.copy().set_opacity(1)
-        shift_vec = dots["king"].get_center() - dots["man"].get_center()
-        self.play(FadeIn(eq_words[1]), FadeIn(eq_nums[1]),
-                  FadeIn(eq_words[2]), FadeIn(eq_nums[2]))
-        self.play(step.animate.shift(shift_vec), run_time=1.2)
-        self.wait(0.3)
+        # + woman: a copy of woman's arrow chains on as is, and the
+        # walker rides it up to (5, 4). Only now does the landing spot
+        # get named.
+        v_woman = vec("woman")
+        self.play(FadeIn(eq_words[2]), FadeIn(eq_nums[2]),
+                  GrowArrow(v_woman), run_time=0.9)
+        hop2 = v_woman.copy()
+        self.play(hop2.animate.shift(mid - org),
+                  v_woman.animate.set_opacity(0.35), run_time=0.9)
         end = dots["queen"].get_center()
-        self.play(walker.animate.move_to(end), run_time=1.1)
+        self.play(walker.animate.move_to(end), run_time=0.9)
         ring = Circle(radius=0.28, color=GREEN, stroke_width=4)
         ring.move_to(end)
         self.play(FadeIn(eq_words[3]), FadeIn(eq_nums[3]), Create(ring),
                   Indicate(labels["queen"], color=GREEN))
+        self.wait(1.0)
+
+        # The two hops net out to one step, and it's the same step that
+        # takes man to woman: the famous direction.
+        net = Arrow(dots["king"].get_center(), end, buff=0.3, color=WHITE,
+                    stroke_width=4, max_tip_length_to_length_ratio=0.08)
+        twin = Arrow(dots["man"].get_center(), dots["woman"].get_center(),
+                     buff=0.12, color=WHITE, stroke_width=4,
+                     max_tip_length_to_length_ratio=0.08)
+        self.play(VGroup(hop1, hop2).animate.set_opacity(0.3),
+                  GrowArrow(net), run_time=0.9)
+        self.play(GrowArrow(twin), run_time=0.7)
         self.wait(2.5)
 
 
