@@ -8,7 +8,7 @@ disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
 [params]
-  description = "Lessons from my ML/AI learnings — written so anyone can follow along."
+  description = "Lessons from my learnings that are (hopefully) written so anyone can follow along."
 
 [markup]
   # Server-side math: goldmark passes LaTeX through, a render hook turns it
