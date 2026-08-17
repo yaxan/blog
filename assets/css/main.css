@@ -189,6 +189,49 @@ figure.anim figcaption {
   text-align: center;
 }
 
+/* beat-stepper controls (added by anim-controls.html; markup stays
+   clean without JS). The video is always the chalkboard color, so the
+   buttons are styled for a dark background in both themes. */
+.anim-stage { position: relative; }
+figure.anim video { cursor: pointer; }
+.anim-controls {
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.anim-count {
+  color: #8b939e;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.anim-step {
+  border: 0;
+  background: none;
+  padding: 0.15rem 0.3rem;
+  color: #cfd4da;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+}
+.anim-step:hover { color: #58c4dd; }
+.anim-auto {
+  border: 0;
+  background: none;
+  padding: 0.15rem 0.3rem;
+  margin-right: 0.2rem;
+  color: #58c4dd;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
+}
+.anim-auto.is-off { color: #8b939e; }
+
 /* numbered display equations, textbook-style */
 .katex-display {
   position: relative;

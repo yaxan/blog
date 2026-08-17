@@ -1,8 +1,17 @@
 {{- /* Embed a Manim-rendered animation by scene name.
-     Looks for static/anim/<SceneName>.mp4 (see `make anims`). */ -}}
+     Looks for static/anim/<SceneName>.mp4 (see `make anims`).
+     data/anim/<SceneName>.json (written by BeatScene during render)
+     holds the [start, end] of every play() call; with it the player
+     steps beat by beat like a slideshow. Sets hasAnim so baseof
+     inlines the player script. */ -}}
 {{- $name := .Get 0 -}}
 {{- $src := printf "anim/%s.mp4" $name | relURL -}}
-<figure class="anim">
-  <video src="{{ $src }}" autoplay loop muted playsinline preload="metadata"></video>
+{{- $beats := "" -}}
+{{- with site.Data.anim }}{{ $beats = index . $name }}{{ end -}}
+{{- .Page.Store.Set "hasAnim" true -}}
+<figure class="anim"{{ with $beats }} data-beats="{{ . | jsonify }}"{{ end }}>
+  <div class="anim-stage">
+    <video src="{{ $src }}" autoplay loop muted playsinline preload="auto"></video>
+  </div>
   {{- with .Inner }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
 </figure>

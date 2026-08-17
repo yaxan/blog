@@ -6,9 +6,13 @@ hand-written templates, no theme, no framework.
 
 ## Hard constraints
 
-- **Zero client-side JavaScript.** Everything interactive is CSS/HTML
-  (`<details>`, counters, media queries). Do not add JS, bundlers, or
-  frameworks; find a build-time or CSS solution instead.
+- **No JS frameworks, bundlers, or dependencies — and almost no JS at
+  all.** Everything interactive is CSS/HTML (`<details>`, counters,
+  media queries). The one sanctioned exception is the small inline
+  vanilla script in `layouts/_partials/anim-controls.html` (the
+  beat-stepper for Manim videos), loaded only on pages that set the
+  `hasAnim` page-store flag. Do not add further scripts; find a
+  build-time or CSS solution instead.
 - **The dark background is `#14161a` and must not drift.** It matches the
   Manim render background exactly so animations sit borderless on the page in
   dark mode. If you change one, change both (`assets/css/main.css` `--board`
@@ -149,10 +153,15 @@ post on the internet, it lost the voice — put the author's phrasing back.
 
 Scenes live in `animations/*.py`, rendered by Manim CE from `.venv`
 (`python3 -m venv .venv && .venv/bin/pip install manim` to recreate). Every
-scene must set `self.camera.background_color = "#14161a"`. Use `Text()`
-(Pango) rather than `Tex()`/`MathTex` — no LaTeX distribution is installed.
-`make anims` renders every scene and copies MP4s into `static/anim/`;
-commit them.
+scene must subclass `BeatScene` (from `animations/beats.py`), not `Scene`:
+it records the [start, end] of every `play()` call into
+`data/anim/<SceneName>.json` at render time, which the manim shortcode
+turns into the on-page beat-stepper (readers step through the animation
+one `play()` at a time; waits are skipped). Every scene must set
+`self.camera.background_color = "#14161a"`. Use `Text()` (Pango) rather
+than `Tex()`/`MathTex` — no LaTeX distribution is installed. `make anims`
+renders every scene and copies MP4s into `static/anim/`; commit the MP4s
+and the `data/anim/` JSONs together.
 
 ## Layout map
 
@@ -169,6 +178,9 @@ assets/css/main.css              all site styling (Chalk & Paper tokens at top)
 assets/css/syntax.css            chroma highlight palettes (generated)
 content/posts/*.md               the posts
 animations/*.py                  Manim scenes -> make anims
+animations/beats.py              BeatScene base: records per-play() beat times
+data/anim/*.json                 committed beat timestamps (one per scene)
 static/anim/*.mp4                committed renders
+layouts/_partials/anim-controls.html  the beat-stepper script (the site's only JS)
 static/katex/                    vendored KaTeX CSS + fonts
 ```

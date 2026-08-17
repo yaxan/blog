@@ -1,8 +1,12 @@
 # blog
 
-Minimal personal blog for ML/AI lessons. Hugo static site, zero client-side
-JavaScript: math is rendered to HTML at build time (Hugo's embedded KaTeX),
-and animations are Manim-rendered MP4s embedded as looping videos.
+Minimal personal blog for ML/AI lessons. Hugo static site, no JS frameworks
+or dependencies: math is rendered to HTML at build time (Hugo's embedded
+KaTeX), and animations are Manim-rendered MP4s embedded as looping videos.
+The only client-side script is a small inline one that turns those videos
+into steppable slideshows: they autoplay by default, and an `auto` toggle
+plus ◀ ▶ arrows let the reader play one animation beat at a time (beat
+timestamps are recorded at render time into `data/anim/`).
 
 ## Everyday use
 

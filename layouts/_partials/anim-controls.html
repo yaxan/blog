@@ -1,0 +1,159 @@
+{{- /* Player for Manim videos. Beats (one per play() call, recorded by
+     BeatScene into data/anim/*.json, waits excluded) arrive as
+     data-beats. Default is autoplay: the video plays and loops as a
+     normal video while the counter tracks which beat is on screen.
+     The "auto" toggle, an arrow press, or a click on the video drops
+     into manual mode, landing on the current beat's end state; from
+     there ▶/→ plays exactly one beat and stops, ◀/← jumps to the
+     previous beat's end. Clicking the video or the toggle resumes
+     autoplay from wherever you are. The one sanctioned piece of
+     client-side JS on the site — vanilla, inline, no dependencies —
+     loaded only on pages that set the hasAnim flag. Without JS (or
+     without beat data) the videos autoplay and loop as plain video. */ -}}
+<script>
+(() => {
+  const ready = (v, fn) => v.readyState >= 1
+    ? fn()
+    : v.addEventListener("loadedmetadata", fn, { once: true });
+
+  let current = null;
+  const seen = new IntersectionObserver(entries => entries.forEach(en => {
+    if (en.isIntersecting) current = en.target;
+  }), { threshold: 0.5 });
+
+  document.querySelectorAll("figure.anim").forEach(fig => {
+    const stage = fig.querySelector(".anim-stage");
+    const v = fig.querySelector("video");
+    if (!stage || !v) return;
+    let beats = null;
+    try { beats = JSON.parse(fig.dataset.beats || "null"); } catch (e) {}
+    if (!beats || !beats.length) return;
+
+    const n = beats.length;
+    let auto = true;      // autoplaying (video loops as normal)
+    let k = 0;            // beat whose end state is shown / in flight
+    let stopAt = null;
+
+    const beatAt = t => {
+      let i = 0;
+      while (i + 1 < n && beats[i + 1][0] <= t) i++;
+      return i;
+    };
+
+    const count = document.createElement("span");
+    count.className = "anim-count";
+    const show = () => { count.textContent = (k + 1) + " / " + n; };
+
+    const autoBtn = document.createElement("button");
+    autoBtn.type = "button";
+    autoBtn.className = "anim-auto";
+    autoBtn.textContent = "auto";
+    autoBtn.setAttribute("aria-label", "toggle autoplay");
+
+    const seekEnd = () => ready(v, () => {
+      v.currentTime = beats[k][1];
+      show();
+    });
+    const setAuto = on => {
+      auto = on;
+      autoBtn.classList.toggle("is-off", !on);
+      if (on) {
+        stopAt = null;
+        v.play();
+      } else {
+        v.pause();
+        stopAt = null;
+        k = beatAt(v.currentTime);   // land the in-flight beat
+        seekEnd();
+      }
+    };
+
+    const tick = () => {
+      if (stopAt == null) return;
+      if (v.currentTime >= stopAt) {
+        v.pause();
+        v.currentTime = stopAt;
+        stopAt = null;
+      } else {
+        requestAnimationFrame(tick);
+      }
+    };
+    const playBeat = i => ready(v, () => {
+      k = i;
+      v.currentTime = beats[i][0];
+      stopAt = beats[i][1];
+      show();
+      v.play();
+      requestAnimationFrame(tick);
+    });
+    const fwd = () => {
+      if (auto) { setAuto(false); return; }       // first press: stop here
+      if (stopAt != null) {                       // mid-beat: land it now
+        const t = stopAt;
+        stopAt = null;
+        v.pause();
+        ready(v, () => { v.currentTime = t; });
+      } else {
+        playBeat(k + 1 < n ? k + 1 : 0);          // past the end: replay
+      }
+    };
+    const back = () => {
+      if (auto) {
+        auto = false;
+        autoBtn.classList.add("is-off");
+        v.pause();
+        k = beatAt(v.currentTime);
+      }
+      stopAt = null;
+      v.pause();
+      k = Math.max(k - 1, 0);
+      seekEnd();
+    };
+
+    const btn = (glyph, label, fn) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "anim-step";
+      b.textContent = glyph;
+      b.setAttribute("aria-label", label);
+      b.addEventListener("click", e => {
+        e.stopPropagation();
+        current = fig;
+        fn();
+      });
+      return b;
+    };
+    autoBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      current = fig;
+      setAuto(!auto);
+    });
+    const ctrl = document.createElement("div");
+    ctrl.className = "anim-controls";
+    ctrl.append(autoBtn, btn("◀", "previous step", back), count,
+                btn("▶", "next step", fwd));
+    stage.appendChild(ctrl);
+    show();
+
+    v.addEventListener("timeupdate", () => {
+      if (auto) {
+        k = beatAt(v.currentTime);
+        show();
+      }
+    });
+    v.addEventListener("click", () => {
+      current = fig;
+      setAuto(!auto);
+    });
+    fig._fwd = fwd;
+    fig._back = back;
+    seen.observe(fig);
+  });
+
+  document.addEventListener("keydown", e => {
+    if (!current || !current._fwd) return;
+    if (e.key === "ArrowRight") { current._fwd(); e.preventDefault(); }
+    else if (e.key === "ArrowLeft") { current._back(); e.preventDefault(); }
+  });
+})();
+</script>

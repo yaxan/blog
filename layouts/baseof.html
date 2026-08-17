@@ -13,5 +13,8 @@
 <footer class="site-footer">
   <p><a href="{{ "index.xml" | relURL }}">RSS</a></p>
 </footer>
+{{- if .Store.Get "hasAnim" }}
+{{ partial "anim-controls.html" . }}
+{{- end }}
 </body>
 </html>
