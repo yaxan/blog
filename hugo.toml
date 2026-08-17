@@ -19,6 +19,11 @@ enableRobotsTXT = true
       block = [['\[', '\]'], ['$$', '$$']]
       inline = [['\(', '\)'], ['$', '$']]
 
+  # Trusted, hand-authored content only. Needed so shortcode HTML (e.g. a
+  # manim embed) survives the tangent body's RenderString pass.
+  [markup.goldmark.renderer]
+    unsafe = true
+
   [markup.highlight]
     # Class-based highlighting; the palette lives in assets/css/syntax.css
     # so code blocks can follow light/dark mode.

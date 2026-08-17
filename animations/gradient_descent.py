@@ -6,10 +6,12 @@ Text() uses Pango, so no LaTeX installation is required.
 
 from manim import *
 
+from beats import BeatScene
+
 BG = "#14161a"  # matches the blog's dark background
 
 
-class GradientDescent(Scene):
+class GradientDescent(BeatScene):
     def construct(self):
         self.camera.background_color = BG
 
@@ -35,7 +37,7 @@ class GradientDescent(Scene):
         self.play(Create(ax, run_time=1), Create(curve, run_time=1.2), FadeIn(label))
 
         x, lr = 2.7, 0.35
-        dot = Dot(ax.c2p(x, f(x)), color=YELLOW, radius=0.1)
+        dot = Dot(ax.c2p(x, f(x)), color=RED, radius=0.1)
         self.play(FadeIn(dot, scale=0.4))
         self.wait(0.3)
 
@@ -45,7 +47,7 @@ class GradientDescent(Scene):
                 ax.c2p(x, f(x)),
                 ax.c2p(new_x, f(new_x)),
                 buff=0,
-                color=YELLOW,
+                color=RED,
                 stroke_width=4,
                 max_tip_length_to_length_ratio=0.18,
             )

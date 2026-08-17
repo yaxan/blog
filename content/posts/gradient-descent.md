@@ -3,6 +3,7 @@ title: "How gradient descent finds the minimum"
 date: 2026-08-10
 description: "A visual walk through the single idea powering nearly all of deep learning."
 glyph: gradient-descent
+draft: true
 ---
 
 Nearly every neural network you've heard of was trained by the same humble
