@@ -8,8 +8,11 @@
      previous beat's end. Clicking the video or the toggle resumes
      autoplay from wherever you are. The one sanctioned piece of
      client-side JS on the site — vanilla, inline, no dependencies —
-     loaded only on pages that set the hasAnim flag. Without JS (or
-     without beat data) the videos autoplay and loop as plain video. */ -}}
+     loaded only on pages that set the hasAnim flag. Videos carry no
+     autoplay attribute and preload only metadata; this script wakes
+     each one as it nears the viewport, so the page doesn't fetch every
+     MP4 up front. Without JS the videos sit paused on their first
+     frame; without beat data they simply play and loop on sight. */ -}}
 <script>
 (() => {
   const ready = (v, fn) => v.readyState >= 1
@@ -17,9 +20,18 @@
     : v.addEventListener("loadedmetadata", fn, { once: true });
 
   let current = null;
+  // Videos load lazily (no autoplay attribute, preload=metadata): each
+  // one starts streaming and playing only as it approaches the
+  // viewport, and pauses again once scrolled away.
   const seen = new IntersectionObserver(entries => entries.forEach(en => {
-    if (en.isIntersecting) current = en.target;
-  }), { threshold: 0.5 });
+    const fig = en.target;
+    if (en.isIntersecting) {
+      current = fig;
+      if (fig._wake) fig._wake();
+    } else if (fig._sleep) {
+      fig._sleep();
+    }
+  }), { threshold: 0.15, rootMargin: "15% 0px" });
 
   document.querySelectorAll("figure.anim").forEach(fig => {
     const stage = fig.querySelector(".anim-stage");
@@ -27,7 +39,13 @@
     if (!stage || !v) return;
     let beats = null;
     try { beats = JSON.parse(fig.dataset.beats || "null"); } catch (e) {}
-    if (!beats || !beats.length) return;
+    if (!beats || !beats.length) {          // no beat data: plain loop
+      v.addEventListener("click", () => v.paused ? v.play() : v.pause());
+      fig._wake = () => v.play();
+      fig._sleep = () => v.pause();
+      seen.observe(fig);
+      return;
+    }
 
     const n = beats.length;
     let auto = true;      // autoplaying (video loops as normal)
@@ -147,6 +165,8 @@
     });
     fig._fwd = fwd;
     fig._back = back;
+    fig._wake = () => { if (auto && stopAt == null) v.play(); };
+    fig._sleep = () => { if (auto) v.pause(); };
     seen.observe(fig);
   });
 

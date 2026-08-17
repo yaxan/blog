@@ -11,7 +11,7 @@
 {{- .Page.Store.Set "hasAnim" true -}}
 <figure class="anim"{{ with $beats }} data-beats="{{ . | jsonify }}"{{ end }}>
   <div class="anim-stage">
-    <video src="{{ $src }}" autoplay loop muted playsinline preload="auto"></video>
+    <video src="{{ $src }}" loop muted playsinline preload="metadata"></video>
   </div>
   {{- with .Inner }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
 </figure>
