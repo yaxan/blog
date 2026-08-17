@@ -1,4 +1,4 @@
 {{ define "main" }}
 <p class="intro">{{ site.Params.description }}</p>
-{{ partial "post-list.html" site.RegularPages.ByDate.Reverse }}
+{{ partial "post-list.html" (where site.RegularPages "Section" "posts").ByDate.Reverse }}
 {{ end }}

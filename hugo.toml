@@ -7,6 +7,9 @@ disableKinds = ["taxonomy", "term"]
 
 enableRobotsTXT = true
 
+# Feeds and defaults treat only the posts section as content.
+mainSections = ["posts"]
+
 [params]
   description = "Lessons from my learnings that are (hopefully) written so anyone can follow along."
 

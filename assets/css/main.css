@@ -93,6 +93,15 @@ a:hover { text-decoration-color: var(--accent); }
   text-decoration: none;
 }
 
+.site-nav a {
+  color: var(--meta);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-left: 1.1rem;
+}
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current="page"] { color: var(--fg); }
+
 h1, h2, h3 {
   font-family: "KaTeX Main", Georgia, serif;
   font-weight: 700;
