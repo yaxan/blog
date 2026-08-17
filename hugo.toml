@@ -1,4 +1,4 @@
-baseURL = "https://example.org/"   # set to your real domain before deploying
+baseURL = "https://yazan.ca/"
 locale = "en-US"
 title = "Yazan Masoud"
 
