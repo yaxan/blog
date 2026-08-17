@@ -3,7 +3,6 @@ title: "Understanding Seq2Seq: RNNs, Encoders, Decoders, & Attention"
 date: 2026-08-10T22:41:52-07:00
 description: "Encoders, decoders, and the problems that motivate the Transformer."
 glyph: seq2seq
-draft: true
 ---
 
 Sequence-to-sequence (seq2seq) models are a family of models that do exactly
