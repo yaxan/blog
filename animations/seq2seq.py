@@ -622,10 +622,10 @@ class KingQueen(BeatScene):
 
         # The same step twice: man -> woman, king -> queen.
         g1 = Arrow(dots["man"].get_center(), dots["woman"].get_center(),
-                   buff=0.12, color=RED, stroke_width=4,
+                   buff=0.12, color=BLUE, stroke_width=4,
                    max_tip_length_to_length_ratio=0.08)
         g2 = Arrow(dots["king"].get_center(), dots["queen"].get_center(),
-                   buff=0.12, color=RED, stroke_width=4,
+                   buff=0.12, color=BLUE, stroke_width=4,
                    max_tip_length_to_length_ratio=0.08)
         self.play(GrowArrow(g1), run_time=0.7)
         self.play(GrowArrow(g2), run_time=0.7)
@@ -646,7 +646,7 @@ class KingQueen(BeatScene):
             Text("≈ (5, 4)", font_size=22, color=GREY_B, font="Helvetica"),
         ).arrange(RIGHT, buff=0.3).move_to([0, 2.9, 0])
 
-        walker = Dot(dots["king"].get_center(), radius=0.11, color=RED)
+        walker = Dot(dots["king"].get_center(), radius=0.11, color=WHITE)
         self.play(FadeIn(eq_words[0]), FadeIn(eq_nums[0]),
                   FadeIn(walker, scale=0.5))
         self.wait(0.3)
