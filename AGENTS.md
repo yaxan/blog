@@ -149,7 +149,29 @@ blog:
 Litmus test: read the edited paragraph aloud. If it could open any ML blog
 post on the internet, it lost the voice — put the author's phrasing back.
 
-## Animations
+Overcorrection is its own tell. Mechanically inverting the list above —
+stripping every dash, chopping every sentence, forcing casualness —
+produces a voice as recognizable as the one it replaces. Fix each
+sentence for its own reasons; the litmus test stays the same.
+
+### Companion notebooks
+
+Notebooks (`notebooks/*.ipynb`) are instructional, so their *structure*
+follows developer-doc conventions (Google style, Simplified Technical
+English) even where posts wouldn't: second person, active voice, present
+tense, one instruction per sentence, condition before instruction
+("Training takes minutes on a GPU, so pick Runtime → … first"), bullets
+for how-to steps. The *sentences* still follow §Writing style and the
+tells list, and this covers code comments, docstrings, and print strings,
+not just markdown cells. Specifics:
+
+- When the article already has the sentence, reuse it with its original
+  punctuation — don't swap the author's colons for dashes.
+- Bold marks a first-mention term or a UI path, never emphasis. Terms the
+  article already bolded stay plain on re-mention.
+- No inverted syntax ("Under each exercise sits…"), no caps-for-emphasis
+  ("ONLY"), no passive where the actor is the reader or the code.
+- Emoji only as cell-type signage (the ✋ solution marker), never in prose.
 
 Scenes live in `animations/*.py`, rendered by Manim CE from `.venv`
 (`python3 -m venv .venv && .venv/bin/pip install manim` to recreate). Every
