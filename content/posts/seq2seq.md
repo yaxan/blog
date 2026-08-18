@@ -402,9 +402,9 @@ score every other word directly, with the same recipe we just went
 through: dot products, softmax, weighted sum. We'll get into how that
 actually works, and what "queries" and "keys" are, in the next post.
 
-If you want this in your hands and not just your head, there's a
+If you want to actually build all of this, I put together a
 [companion notebook](https://colab.research.google.com/github/yaxan/blog/blob/main/notebooks/seq2seq.ipynb)
-you can run in the browser. The boring parts come prefilled; the
+that runs in your browser. The boring parts are already filled in; the
 important ones — the RNN update, the encoder, the decoder, the
-attention step — you fill in yourself, then watch the bottleneck and
-its fix play out on a real model.
+attention step — you write yourself, and then you can watch the
+bottleneck show up, and attention fix it, on a model you trained.
