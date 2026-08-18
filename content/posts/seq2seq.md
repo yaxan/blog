@@ -405,6 +405,6 @@ actually works, and what "queries" and "keys" are, in the next post.
 If you want to actually build all of this, I put together a
 [companion notebook](https://colab.research.google.com/github/yaxan/blog/blob/main/notebooks/seq2seq.ipynb)
 that runs in your browser. The boring parts are already filled in; the
-important ones — the RNN update, the encoder, the decoder, the
-attention step — you write yourself, and then you can watch the
-bottleneck show up, and attention fix it, on a model you trained.
+important ones you write yourself: the RNN update, the encoder, the
+decoder, the attention step. Then you can watch the bottleneck show
+up, and attention fix it, on a model you trained.
