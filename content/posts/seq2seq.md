@@ -401,3 +401,10 @@ no: throw away the recurrence, keep the attention, and let every word
 score every other word directly, with the same recipe we just went
 through: dot products, softmax, weighted sum. We'll get into how that
 actually works, and what "queries" and "keys" are, in the next post.
+
+If you want this in your hands and not just your head, there's a
+[companion notebook](https://colab.research.google.com/github/yaxan/blog/blob/main/notebooks/seq2seq.ipynb)
+you can run in the browser. The boring parts come prefilled; the
+important ones — the RNN update, the encoder, the decoder, the
+attention step — you fill in yourself, then watch the bottleneck and
+its fix play out on a real model.
