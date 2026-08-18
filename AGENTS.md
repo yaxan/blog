@@ -172,6 +172,10 @@ not just markdown cells. Specifics:
 - No inverted syntax ("Under each exercise sits…"), no caps-for-emphasis
   ("ONLY"), no passive where the actor is the reader or the code.
 - Emoji only as cell-type signage (the ✋ solution marker), never in prose.
+- The notebook itself is agent-written and is never a voice reference.
+  Calibrate only against the author's article prose; when it matters
+  whether a given line is the author's, check git history, since some
+  article captions have passed through agent hands too.
 
 Scenes live in `animations/*.py`, rendered by Manim CE from `.venv`
 (`python3 -m venv .venv && .venv/bin/pip install manim` to recreate). Every
