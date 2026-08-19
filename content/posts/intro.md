@@ -1,6 +1,6 @@
 ---
 title: "Intro"
-date: 2026-08-09
+date: 2026-08-17
 description: "Why this blog exists, how to read it, and where it's headed."
 glyph: intro
 ---
