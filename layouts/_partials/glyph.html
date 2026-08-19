@@ -14,6 +14,10 @@
   <rect x="25.5" y="12.5" width="5" height="3" fill="#58c4dd"/>
   <rect x="25.5" y="18.5" width="5" height="3" fill="#58c4dd"/>
   <rect x="37" y="10" width="15" height="14" rx="2" fill="none" stroke="#83c167" stroke-width="2"/>
+{{- else if eq $name "intro" }}
+  <path d="M 4 30 H 16 V 22 H 28 V 14 H 40 V 6 H 52" fill="none" stroke="#58c4dd" stroke-width="2"/>
+  <circle cx="10" cy="27" r="2.5" fill="#fc6255"/>
+  <circle cx="46" cy="3.5" r="2.5" fill="#83c167"/>
 {{- else }}
   <path d="M 4 8 Q 28 44 52 8" fill="none" stroke="#58c4dd" stroke-width="2.5"/>
   <line x1="4" y1="14.5" x2="34" y2="32.5" stroke="#f5e13d" stroke-width="1.5"/>
