@@ -171,7 +171,16 @@ not just markdown cells. Specifics:
   article already bolded stay plain on re-mention.
 - No inverted syntax ("Under each exercise sits…"), no caps-for-emphasis
   ("ONLY"), no passive where the actor is the reader or the code.
-- Emoji only as cell-type signage (the ✋ solution marker), never in prose.
+- Emoji only as cell-type signage (the ✋ solution and 💡 hint markers),
+  never in prose.
+- Exercise scaffolding is three-tier: the TODO says *what* in words plus
+  tensor shapes but never the exact calls; a collapsed 💡 Hint cell holds
+  the exact calls as comments; a collapsed ✋ Solution cell holds working
+  code. Exact expressions in a TODO spoil the exercise — the reader
+  should transcribe from the hint at worst, never from the TODO.
+- Going beyond the article's scope is allowed when the notebook carries
+  the full explanation itself (beam search is the precedent); never
+  assume the article covered something it didn't.
 - The notebook itself is agent-written and is never a voice reference.
   Calibrate only against the author's article prose; when it matters
   whether a given line is the author's, check git history, since some
