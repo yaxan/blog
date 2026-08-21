@@ -213,8 +213,11 @@ passed along each time step, and its starting value is the context
 itself: the decoder picks up exactly where the encoder left off. At each
 time step it produces one output word from its hidden state, updates the
 hidden state, and feeds the word it just produced back in as the next
-step's input. A special start marker kicks off the first step, and the
-sentence ends when the decoder produces a special stop word.
+step's input. Producing a word is nothing fancy: from its hidden state
+the decoder computes a score for every word it knows, one number each,
+and the highest score wins. A special start marker kicks off the first
+step, and the sentence ends when the decoder produces a special stop
+word.
 
 {{< manim "DecoderWrites" >}}
 The context becomes the decoder's starting hidden state. Every step emits
@@ -359,10 +362,11 @@ All together, one decoding time step looks like this:
    network with no loop in it, trained jointly with the rest of the
    model.
 6. The FFN's output picks the word for this time
-   step.{{< sidenote >}}How does a vector pick a word? The FFN's last
-   layer has one unit per word in the vocabulary, so its output is a
-   score for every word the model knows. Softmax those scores into
-   shares, same as before, and the biggest share wins.{{< /sidenote >}}
+   step.{{< sidenote >}}How does a vector pick a word? The scoring from
+   the classic decoder again, now with the FFN doing it: the last layer
+   has one unit per word in the vocabulary, so its output is a score for
+   every word the model knows. Softmax those scores into shares, same as
+   before, and the biggest share wins.{{< /sidenote >}}
 7. Repeat for the next time steps, feeding each output word back in,
    until the model produces the stop word.
 
