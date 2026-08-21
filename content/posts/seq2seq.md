@@ -270,7 +270,8 @@ decoder's state.{{< sidenote >}}The original attention paper actually
 did the comparing with a tiny neural network: feed it the two vectors,
 one number comes out, trained with everything else. Later work found the
 plain dot product works about as well, and that's the version
-Transformers use.{{< /sidenote >}} Then the
+Transformers use, with one small tweak to the scores that we'll get to
+in the next post.{{< /sidenote >}} Then the
 scores go through a **softmax**, which turns them into weights: positive
 numbers that add up to 1.
 
